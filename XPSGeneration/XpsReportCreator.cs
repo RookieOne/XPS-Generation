@@ -13,8 +13,8 @@ namespace XPSGeneration
 
         public void GenerateReportAndShowPreview(IDocumentPaginatorSource paginatorSource)
         {
-            //string fileName = Path.GetTempPath() + GenerateFileName();
-            string fileName = @"C:\temp\" + GenerateFileName();
+            string fileName = Path.GetTempPath() + GenerateFileName();
+            //string fileName = @"C:\temp\" + GenerateFileName();
 
             var paginator = paginatorSource.DocumentPaginator;
             paginator.PageSize = m_DefaultPageSize;
@@ -39,7 +39,7 @@ namespace XPSGeneration
         private void OnDocumentWritingCompleted(XpsDocument document, string fileName)
         {
             document.Close();
-            //Process.Start(fileName);
+            Process.Start(fileName);
         }
     }
 }

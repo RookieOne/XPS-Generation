@@ -29,10 +29,7 @@ namespace XPSGeneration
                 var view = new DocumentReviewPrintView();
                 var documentPrintPresenter = new DocumentReviewPrintPresentationModel(view);
 
-                view.ShowInDialog();
-
-                var w = view.image.ActualWidth;
-                var h = view.image.ActualHeight;
+                //view.ShowInDialog();
 
                 Stream pageStream = StreamHelper.FromFile(@"data\Page{0}.jpg".Format(i));
                 documentPrintPresenter.Page = StreamHelper.ToArray(pageStream);

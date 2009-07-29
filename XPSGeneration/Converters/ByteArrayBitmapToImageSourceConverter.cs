@@ -18,36 +18,21 @@ namespace XPSGeneration
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             byte[] rawBmp = value as byte[];
-            if (rawBmp != null)
-            {
-                Bitmap bitmap = ByteArrayToBitmap(rawBmp);
-                if (bitmap != null)
-                {
-                    BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
-                        bitmap.GetHbitmap(),
-                        IntPtr.Zero,
-                        Int32Rect.Empty,
-                        BitmapSizeOptions.FromEmptyOptions());
-                    return bitmapSource;
-                }
-            }
-            return null;
+
+            if (rawBmp == null)
+                return null;
+
+            var bitmapimage = new BitmapImage();
+            bitmapimage.BeginInit();            
+            bitmapimage.StreamSource = new MemoryStream(rawBmp);
+            bitmapimage.EndInit();
+
+            return bitmapimage;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
-        }
-
-        public static Bitmap ByteArrayToBitmap(byte[] imageIn)
-        {
-            if ((imageIn != null) && (imageIn.Length == 0))
-            {
-                return null;
-            }
-            var stream = new MemoryStream();
-            new BinaryWriter(stream).Write(imageIn);
-            return new Bitmap(stream);
         }
     }
 }
