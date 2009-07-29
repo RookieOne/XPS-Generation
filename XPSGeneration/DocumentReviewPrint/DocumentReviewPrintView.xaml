@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="XPSGeneration.DocumentReviewPrintView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:XPSGeneration"       
+    HorizontalAlignment="Stretch" 
+    VerticalAlignment="Stretch">
+    <Grid>
+        <Grid.Resources>
+            <local:ByteArrayBitmapToImageSourceConverter x:Key="ByteArrayBitmapToImageSourceConverter" />
+            <local:InkDataToStrokeCollectionConverter x:Key="InkDataToStrokeCollectionConverter"/>
+        </Grid.Resources>
+
+        <Viewbox  StretchDirection="Both" Stretch="Fill" >
+            <InkCanvas x:Name="canvas">
+
+                <!--<Image Source="{Binding Page}" />-->
+
+                <Image x:Name="image" 
+                       Source="{Binding Page, Converter={StaticResource ByteArrayBitmapToImageSourceConverter}}" />
+
+                <InkCanvas.Strokes>
+                    <Binding Path="InkedAnnotation" Converter="{StaticResource InkDataToStrokeCollectionConverter}" />
+                </InkCanvas.Strokes>
+            </InkCanvas>
+        </Viewbox>
+    </Grid>
+</UserControl>
